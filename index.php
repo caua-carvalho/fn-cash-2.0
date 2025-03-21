@@ -121,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="error"><?php echo $error; ?></div>
         <?php endif; ?>
 
-        <form action="login.php" method="POST">
+        <form action="index.php" method="POST">
             <div class="form-group">
                 <label for="email">Email ou Nome de Usuário</label>
                 <input type="text" id="email" name="email" value="<?php echo htmlspecialchars($user_input); ?>" required>
