@@ -1,898 +1,732 @@
-/* ==========================================
-   SISTEMA DE GERENCIAMENTO FINANCEIRO - CSS BASE
-   ========================================== */
+/* 
+ * FN-CASH - Sistema de Controle Financeiro Pessoal
+ * Folha de estilos principal
+ */
 
-   :root {
-    --primary: #1E1E1E;
-    --secondary: #4E997E;
-    --accent: #055336;
-    --text: #043821;
-    --light: #ffffff;
-    --gradient: linear-gradient(135deg, #07A262, #4E997E, #055336);
+ :root {
+    /* Paleta de cores do sistema */
+    --fn-dark-green: #043821;
+    --fn-dark-green-alt: #055336;
+    --fn-bright-green: #07A262;
+    --fn-medium-green: #4E997E;
+    --fn-white: #FAFAFA;
     
-    /* Cores complementares derivadas */
-    --primary-light: #2a2a2a;
-    --primary-dark: #171717;
-    --secondary-light: #5aab8e;
-    --secondary-dark: #3d7a65;
-    --accent-light: #066542;
-    --accent-dark: #044128;
-    --text-light: #044f2e;
-    --text-dark: #032717;
+    /* Cores para tipos de transações */
+    --fn-expense: #dc3545;
+    --fn-income: #28a745;
+    --fn-transfer: #17a2b8;
     
-    /* Cores de estado */
-    --success: #28a745;
-    --info: #17a2b8;
-    --warning: #ffc107;
-    --danger: #dc3545;
-    
-    /* Sombras */
-    --shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075);
-    --shadow: 0 .5rem 1rem rgba(0,0,0,.15);
-    --shadow-lg: 0 1rem 3rem rgba(0,0,0,.175);
+    /* Cores para status */
+    --fn-pending: #ffc107;
+    --fn-completed: #28a745;
+    --fn-canceled: #6c757d;
 }
 
-/* ========== RESETS E COMUM ========== */
+/* ===== ESTILOS GERAIS ===== */
 body {
-    font-family: 'Roboto', sans-serif;
-    color: var(--text);
-    background-color: #f8f9fa;
-    overflow-x: hidden;
+    background-color: #f7f9fc;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-a {
-    color: var(--accent);
-    transition: all 0.2s ease;
+/* ===== LAYOUT PRINCIPAL ===== */
+.wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
 }
 
-a:hover {
-    color: var(--accent-light);
+#content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.3s;
+    background-color: #f7f9fc;
+}
+
+.content-container {
+    padding: 0 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background-color: var(--fn-dark-green);
+    color: var(--fn-white);
+    transition: all 0.3s;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.sidebar.collapsed {
+    margin-left: -250px;
+}
+
+.sidebar-header {
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-brand {
+    color: var(--fn-white);
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
     text-decoration: none;
 }
 
-/* ========== TIPOGRAFIA ========== */
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    color: var(--primary);
+.sidebar-brand:hover {
+    color: var(--fn-white);
+    text-decoration: none;
 }
 
-.bg-despesa {
-    background-color: red !important;
-    color: white;
+.sidebar-user {
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.text-primary {
-    color: var(--primary) !important;
-}
-
-.text-secondary {
-    color: var(--secondary) !important;
-}
-
-.text-accent {
-    color: var(--accent) !important;
-}
-
-.bg-primary {
-    background-color: var(--primary) !important;
-}
-
-.bg-secondary {
-    background-color: var(--secondary) !important;
-}
-
-.bg-accent {
-    background-color: var(--accent) !important;
-}
-
-.bg-gradient {
-    background: var(--gradient) !important;
-}
-
-/* ========== BOTÕES ========== */
-.btn {
-    border-radius: 4px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-    transition: all 0.3s ease;
-}
-
-.btn-primary {
-    background-color: var(--primary);
-    border-color: var(--primary);
-}
-
-.btn-primary:hover, .btn-primary:focus {
-    background-color: var(--primary-dark);
-    border-color: var(--primary-dark);
-    box-shadow: 0 0 0 0.2rem rgba(30, 30, 30, 0.25);
-}
-
-.btn-secondary {
-    background-color: var(--secondary);
-    border-color: var(--secondary);
-}
-
-.btn-secondary:hover, .btn-secondary:focus {
-    background-color: var(--secondary-dark);
-    border-color: var(--secondary-dark);
-    box-shadow: 0 0 0 0.2rem rgba(78, 153, 126, 0.25);
-}
-
-.btn-accent {
-    background-color: var(--accent) !important;
-    border-color: var(--accent);
-    color: var(--light);
-}
-
-.btn-accent:hover, .btn-accent:focus {
-    background-color: var(--accent-dark);
-    border-color: var(--accent-dark);
-    color: var(--light);
-    box-shadow: 0 0 0 0.2rem rgba(5, 83, 54, 0.25);
-}
-
-.btn-outline-primary {
-    color: var(--primary);
-    border-color: var(--primary);
-}
-
-.btn-outline-primary:hover {
-    background-color: var(--primary);
-    border-color: var(--primary);
-}
-
-.btn-outline-secondary {
-    color: var(--secondary);
-    border-color: var(--secondary);
-}
-
-.btn-outline-secondary:hover {
-    background-color: var(--secondary);
-    border-color: var(--secondary);
-}
-
-.btn-outline-accent {
-    color: var(--accent);
-    border-color: var(--accent);
-}
-
-.btn-outline-accent:hover {
-    background-color: var(--accent);
-    border-color: var(--accent);
-    color: var(--light);
-}
-
-.btn-gradient {
-    background: var(--gradient);
-    color: var(--light);
-    border: none;
-}
-
-.btn-gradient:hover {
-    opacity: 0.9;
-    color: var(--light);
-}
-
-/* Botão com ícone */
-.btn-icon {
-    display: inline-flex;
+.user-info {
+    display: flex;
     align-items: center;
 }
 
-.btn-icon i {
-    margin-right: 5px;
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-right: 10px;
 }
 
-.btn-icon-right i {
-    margin-left: 5px;
-    margin-right: 0;
+.user-name {
+    color: var(--fn-white);
+    font-weight: 600;
+    display: block;
 }
 
-/* ========== CARDS ========== */
-.card {
+.user-profile-link {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+}
+
+.user-profile-link:hover {
+    color: var(--fn-white);
+    text-decoration: none;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-header {
+    padding: 10px 20px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+}
+
+.sidebar-item {
+    position: relative;
+}
+
+.sidebar-link {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.sidebar-link i {
+    margin-right: 10px;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-link:hover {
+    color: var(--fn-white);
+    background-color: rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+}
+
+.sidebar-item.active .sidebar-link {
+    color: var(--fn-white);
+    background-color: var(--fn-bright-green);
+    font-weight: 600;
+}
+
+.sidebar-footer {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* ===== TOP NAVBAR ===== */
+.top-navbar {
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.top-navbar .btn {
+    color: var(--fn-dark-green);
+    padding: 0.25rem 0.5rem;
+}
+
+.top-navbar .btn:hover {
+    color: var(--fn-bright-green);
+}
+
+.navbar-search .form-control {
+    border-radius: 20px 0 0 20px;
+    border: 1px solid #f0f0f0;
+    border-right: none;
+    background-color: #f8f9fa;
+}
+
+.navbar-search .btn {
+    border-radius: 0 20px 20px 0;
+    background-color: #f8f9fa;
+    border: 1px solid #f0f0f0;
+    border-left: none;
+    color: #6c757d;
+}
+
+.navbar-search .btn:hover {
+    color: var(--fn-bright-green);
+}
+
+.dropdown-item i {
+    margin-right: 0.5rem;
+    width: 1rem;
+    text-align: center;
+}
+
+.dropdown-menu {
+    padding: 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     border: none;
     border-radius: 8px;
-    box-shadow: var(--shadow-sm);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.dropdown-header {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.dropdown-footer {
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+    text-align: center;
+    border-top: 1px solid #f0f0f0;
+}
+
+.dropdown-footer a {
+    color: var(--fn-bright-green);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.badge-counter {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.4rem;
+}
+
+/* ===== CARDS ===== */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .card-header {
-    background-color: rgba(0, 0, 0, 0.03);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: var(--fn-dark-green);
+    color: var(--fn-white);
+    border-radius: 10px 10px 0 0 !important;
+    padding: 0.75rem 1.25rem;
     font-weight: 600;
 }
 
-.card-accent {
-    border-top: 3px solid var(--accent);
+.card-header .nav-link {
+    color: var(--fn-white);
+    opacity: 0.8;
+    transition: opacity 0.2s;
 }
 
-.card-primary {
-    border-top: 3px solid var(--primary);
+.card-header .nav-link.active {
+    opacity: 1;
+    border-bottom: 2px solid var(--fn-bright-green);
 }
 
-.card-secondary {
-    border-top: 3px solid var(--secondary);
+.card-header .nav-link:hover {
+    opacity: 1;
 }
 
-/* ========== FORMULÁRIOS ========== */
-.form-control {
-    border-radius: 4px;
-    border: 1px solid #ced4da;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+/* ===== BOTÕES ===== */
+.btn-primary {
+    background-color: var(--fn-bright-green);
+    border-color: var(--fn-bright-green);
 }
 
-.form-control:focus  {
-    border-color: var(--secondary);
-    box-shadow: 0 0 0 0.2rem rgba(78, 153, 126, 0.25);
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--fn-dark-green-alt);
+    border-color: var(--fn-dark-green-alt);
 }
 
-.form-group label {
+.btn-outline-primary {
+    color: var(--fn-bright-green);
+    border-color: var(--fn-bright-green);
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus {
+    background-color: var(--fn-bright-green);
+    border-color: var(--fn-bright-green);
+}
+
+.btn {
+    border-radius: 6px;
     font-weight: 500;
-    color: var(--text);
-    margin-bottom: 0.5rem;
 }
 
-.input-group-text {
-    color: var(--ligth);
+/* ===== FORMULÁRIOS ===== */
+.form-control {
+    border-radius: 6px;
     border: 1px solid #ced4da;
+    padding: 0.5rem 0.75rem;
 }
 
-/* Checkbox personalizado */
-.custom-control-input:checked ~ .custom-control-label::before {
-    background-color: var(--secondary);
-    border-color: var(--secondary);
-}
-
-.custom-control-input:focus ~ .custom-control-label::before {
+.form-control:focus {
+    border-color: var(--fn-medium-green);
     box-shadow: 0 0 0 0.2rem rgba(78, 153, 126, 0.25);
 }
 
-/* ========== TABELAS ========== */
-.table {
-    color: var(--text);
+label {
+    font-weight: 500;
+    color: #495057;
 }
 
-.table thead th {
-    border-bottom: 2px solid var(--secondary);
-    color: var(--primary);
+/* ===== TABELAS ===== */
+.table th {
+    border-top: none;
+    border-bottom: 2px solid var(--fn-medium-green);
     font-weight: 600;
+    color: var(--fn-dark-green);
+}
+
+.table td {
+    vertical-align: middle;
 }
 
 .table-hover tbody tr:hover {
     background-color: rgba(78, 153, 126, 0.05);
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(0, 0, 0, 0.02);
+/* Estilos para tipos de transações */
+.badge-expense {
+    background-color: var(--fn-expense);
+    color: white;
 }
 
-/* ========== NAVEGAÇÃO ========== */
-.navbar {
-    padding: 0.5rem 1rem;
-    box-shadow: var(--shadow-sm);
+.badge-income {
+    background-color: var(--fn-income);
+    color: white;
 }
 
-.navbar-dark {
-    background-color: var(--primary);
+.badge-transfer {
+    background-color: var(--fn-transfer);
+    color: white;
 }
 
-.navbar-dark .navbar-brand {
-    color: var(--light);
-    font-weight: 700;
+/* Estilos para status de transações */
+.badge-pending {
+    background-color: var(--fn-pending);
+    color: #212529;
 }
 
-.navbar-dark .navbar-nav .nav-link {
-    color: rgba(255, 255, 255, 0.8);
+.badge-completed {
+    background-color: var(--fn-completed);
+    color: white;
 }
 
-.navbar-dark .navbar-nav .nav-link:hover,
-.navbar-dark .navbar-nav .nav-link:focus {
-    color: var(--light);
+.badge-canceled {
+    background-color: var(--fn-canceled);
+    color: white;
 }
 
-.navbar-dark .navbar-nav .nav-link.active {
-    color: var(--light);
-    border-bottom: 2px solid var(--secondary);
+/* Valores monetários */
+.text-expense {
+    color: var(--fn-expense);
+    font-weight: 600;
 }
 
-/* Sidebar */
-.sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 100;
-    padding: 0;
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-    background-color: var(--primary);
-    transition: all 0.3s;
+.text-income {
+    color: var(--fn-income);
+    font-weight: 600;
 }
 
-.sidebar-sticky {
+.text-transfer {
+    color: var(--fn-transfer);
+    font-weight: 600;
+}
+
+/* ===== FILTROS ===== */
+.filter-card {
+    background-color: rgba(250, 250, 250, 0.9);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.filter-badge {
+    background-color: var(--fn-medium-green);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+.filter-badge .close {
+    margin-left: 5px;
+    color: white;
+    text-shadow: none;
+    font-weight: normal;
+    opacity: 0.7;
+}
+
+.filter-badge .close:hover {
+    opacity: 1;
+}
+
+/* ===== ACTIONS MENU ===== */
+.actions-menu {
     position: relative;
-    top: 0;
-    height: calc(100vh - 48px);
-    padding-top: .5rem;
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 100vh;
 }
 
-.sidebar .nav-link {
-    color: rgba(255, 255, 255, 0.8);
-    padding: 0.75rem 1rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
+.actions-menu .dropdown-menu {
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 0.875rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.sidebar .nav-link:hover {
-    color: var(--light);
-    background-color: rgba(255, 255, 255, 0.1);
+.actions-menu .dropdown-item {
+    padding: 0.5rem 1rem;
 }
 
-.sidebar .nav-link.active {
-    color: var(--light);
-    background-color: var(--accent);
+.actions-menu .dropdown-item i {
+    margin-right: 0.5rem;
+    opacity: 0.6;
 }
 
-.sidebar .nav-link i {
-    margin-right: 10px;
-    width: 20px;
-    text-align: center;
+/* ===== DATE PICKER ===== */
+.datepicker {
+    border-radius: 6px;
+    padding: 10px;
 }
 
-/* Dropdown personalizado */
-.dropdown-menu {
-    border: none;
-    box-shadow: var(--shadow);
-    border-radius: 5px;
+.datepicker table tr td.active, 
+.datepicker table tr td.active:hover, 
+.datepicker table tr td.active.disabled, 
+.datepicker table tr td.active.disabled:hover {
+    background-color: var(--fn-bright-green) !important;
+    background-image: none;
 }
 
-.dropdown-item:hover {
-    background-color: rgba(78, 153, 126, 0.1);
-    color: var(--accent);
+/* ===== MODAL ===== */
+.modal-header {
+    background-color: var(--fn-dark-green);
+    color: var(--fn-white);
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
 }
 
-.dropdown-item.active {
-    background-color: var(--secondary);
+.modal-header .close {
+    color: var(--fn-white);
+    opacity: 0.7;
 }
 
-/* ========== BADGES ========== */
-.badge-primary {
-    background-color: var(--primary);
+.modal-header .close:hover {
+    opacity: 1;
 }
 
-.badge-secondary {
-    background-color: var(--secondary);
+.modal-footer {
+    border-top: 0;
 }
 
-.badge-accent {
-    background-color: var(--accent);
-    color: var(--light);
+.modal-content {
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* ========== UTILITÁRIOS ========== */
-.shadow-sm {
-    box-shadow: var(--shadow-sm) !important;
+/* ===== CALENDAR VIEW ===== */
+.calendar-view .fc-toolbar {
+    margin-bottom: 1.5em;
 }
 
-.shadow {
-    box-shadow: var(--shadow) !important;
+.calendar-view .fc-toolbar h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--fn-dark-green);
 }
 
-.shadow-lg {
-    box-shadow: var(--shadow-lg) !important;
+.calendar-view .fc-event {
+    border-radius: 3px;
+    font-size: 0.85em;
+    cursor: pointer;
 }
 
-.border-primary {
-    border-color: var(--primary) !important;
+.calendar-view .fc-event.expense {
+    background-color: var(--fn-expense);
+    border-color: var(--fn-expense);
 }
 
-.border-secondary {
-    border-color: var(--secondary) !important;
+.calendar-view .fc-event.income {
+    background-color: var(--fn-income);
+    border-color: var(--fn-income);
 }
 
-.border-accent {
-    border-color: var(--accent) !important;
+.calendar-view .fc-event.transfer {
+    background-color: var(--fn-transfer);
+    border-color: var(--fn-transfer);
 }
 
-/* ========== ANIMAÇÕES ========== */
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+    #content {
+        margin-left: 0;
+    }
+    
+    .content-container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .card {
+        margin-bottom: 15px;
+    }
+    
+    .table-responsive {
+        border: none;
+    }
+    
+    .filter-card {
+        padding: 10px;
+    }
+    
+    .sidebar {
+        margin-left: -250px;
+    }
+    
+    .sidebar.collapsed {
+        margin-left: 0;
+    }
+}
+
+@media (min-width: 769px) {
+    #content {
+        margin-left: 250px;
+    }
+    
+    .sidebar-overlay {
+        display: none !important;
+    }
+    
+    #sidebarCollapseBtn {
+        display: none;
+    }
+}
+
+/* ===== ANIMAÇÕES ===== */
+.fade-in {
+    animation: fadeIn 0.3s ease;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
-@keyframes slideUp {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+/* ===== UTILITÁRIOS ===== */
+.bg-primary-soft {
+    background-color: rgba(7, 162, 98, 0.1);
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+.text-primary {
+    color: var(--fn-bright-green) !important;
 }
 
-.animate-fade-in {
-    animation: fadeIn 0.5s ease forwards;
+.border-primary {
+    border-color: var(--fn-bright-green) !important;
 }
 
-.animate-slide-up {
-    animation: slideUp 0.5s ease forwards;
+.rounded-lg {
+    border-radius: 10px !important;
 }
 
-.animate-pulse {
-    animation: pulse 1.5s infinite;
+.shadow-sm {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
 }
 
-/* Delay de animação */
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
-.delay-5 { animation-delay: 0.5s; }
+/* Adicione estes estilos ao seu arquivo style.css existente */
 
-/* ========== COMPONENTES ESPECÍFICOS ========== */
-/* Indicador Financeiro */
-.finance-card {
-    padding: 1.5rem;
-    border-radius: 8px;
-    color: var(--light);
-    position: relative;
-    overflow: hidden;
-    min-height: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.finance-card h3 {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: inherit;
-}
-
-.finance-card .value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0;
-}
-
-.finance-card .trend {
-    font-size: 0.875rem;
-    display: flex;
-    align-items: center;
-}
-
-.finance-card .trend i {
-    margin-right: 5px;
-}
-
-.finance-card .trend.up {
-    color: var(--light);
-}
-
-.finance-card .trend.down {
-    color: var(--light);
-}
-
-.finance-card .icon {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    opacity: 0.1;
-    font-size: 3rem;
-}
-
-/* Indicadores coloridos */
-.finance-card.income {
-    background: var(--gradient);
-}
-
-.finance-card.expense {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-}
-
-.finance-card.balance {
-    background: linear-gradient(135deg, #2980b9, #3498db);
-}
-
-.finance-card.savings {
-    background: linear-gradient(135deg, #16a085, #1abc9c);
-}
-
-/* Gráfico de transações */
-.transaction-chart {
-    height: 300px;
-    width: 100%;
-}
-
-/* Lista de transações */
-.transaction-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.transaction-item {
-    padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.transaction-item:last-child {
-    border-bottom: none;
-}
-
-.transaction-info {
-    display: flex;
-    align-items: center;
-}
-
-.transaction-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-    color: var(--light);
-}
-
-.transaction-icon.income {
-    background-color: var(--success);
-}
-
-.transaction-icon.expense {
-    background-color: var(--danger);
-}
-
-.transaction-icon.transfer {
-    background-color: var(--info);
-}
-
-.transaction-details h5 {
-    margin-bottom: 0;
-    font-size: 0.95rem;
-}
-
-.transaction-details p {
-    margin-bottom: 0;
-    font-size: 0.8rem;
-    color: #6c757d;
-}
-
-.transaction-amount {
-    font-weight: 600;
-}
-
-.transaction-amount.income {
-    color: var(--success);
-}
-
-.transaction-amount.expense {
-    color: var(--danger);
-}
-
-/* Navegação por abas personalizada */
-.custom-tabs {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    margin-bottom: 1.5rem;
-}
-
-.custom-tabs .nav-link {
-    border: none;
-    color: #6c757d;
-    padding: 0.5rem 1rem;
-    font-weight: 600;
-    border-bottom: 3px solid transparent;
-}
-
-.custom-tabs .nav-link:hover {
-    color: var(--text);
-}
-
-.custom-tabs .nav-link.active {
-    color: var(--accent);
-    background-color: transparent;
-    border-bottom: 3px solid var(--accent);
-}
-
-/* ========== COMPONENTES DE METAS ========== */
-
-/* Melhorar contraste de texto em fundos escuros */
-.bg-accent, .bg-primary, .bg-secondary, .bg-success, .bg-info, .bg-warning, .bg-danger {
-    color: var(--light) !important;
-}
-
-.progress-bar {
-    color: var(--light) !important;
-    font-weight: 600;
-    text-shadow: 0 0 2px rgba(0,0,0,0.5);
-}
-
-/* Badges com melhor contraste */
-.badge-light {
-    color: var(--text) !important;
-    background-color: var(--background-light);
-}
-
-.badge-success, .badge-danger, .badge-warning, .badge-info, .badge-primary, .badge-secondary {
-    color: var(--light) !important;
-}
-
-/* Melhorar a legibilidade das datas de meta */
-.meta-info-separator {
-    border-top: 1px solid var(--border-color);
-    margin: 10px 0;
-}
-
-/* Seletor de cores de meta com contorno ao selecionar */
-.color-option.active, .edit-color-option.active {
-    border: 2px solid var(--primary) !important;
-    transform: scale(1.2);
-}
-
-.color-option:hover, .edit-color-option:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-}
-
-/* Estado vazio mais atraente */
-#empty-state {
-    background-color: var(--background-light);
-    border-radius: 10px;
-    padding: 40px;
-}
-
-#empty-state .empty-state-icon {
-    color: var(--accent);
-    opacity: 0.8;
-}
-
-/* Animação para o progresso de metas concluídas */
-.progress-bar[aria-valuenow="100"] {
-    background-image: linear-gradient(45deg, 
-        rgba(255, 255, 255, 0.15) 25%, 
-        transparent 25%, 
-        transparent 50%, 
-        rgba(255, 255, 255, 0.15) 50%, 
-        rgba(255, 255, 255, 0.15) 75%, 
-        transparent 75%, 
-        transparent);
-    background-size: 1rem 1rem;
-    animation: progress-bar-stripes 1s linear infinite;
-}
-
-/* Cards de metas */
-.card-meta {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: none;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.card-meta:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow);
-}
-
-.card-meta .progress {
-    height: 20px;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.card-meta .card-body {
-    background-color: var(--light);
-}
-
-.card-meta .card-text {
-    color: var(--text);
-}
-
-/* Texto com alto contraste */
-.text-dark {
-    color: var(--text) !important;
-}
-
-.card-meta small {
-    color: var(--text-light);
-}
-
-/* Botão circular para adicionar meta */
-.btn-circle {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    text-align: center;
-    padding: 0;
-    line-height: 50px;
-    font-size: 20px;
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    box-shadow: var(--shadow);
-    z-index: 100;
-    background-color: var(--accent);
-    color: var(--light);
-}
-
-.btn-circle:hover {
-    background-color: var(--accent-dark);
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-}
-
-/* Indicador de progresso circular para metas */
-.progress-circle {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: var(--background-light);
-    margin: 0 auto;
-}
-
-.progress-circle-fill {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    border-radius: 50%;
-    background-color: var(--light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--accent);
-}
-
-.progress-circle::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 10px solid var(--accent);
-    border-bottom-color: transparent;
-    border-right-color: transparent;
-    transform: rotate(45deg);
-    box-sizing: border-box;
-}
-
-/* Estilos para o seletor de ícones */
-.icon-selector-container {
-    max-height: 300px;
+/* ===== CATEGORIAS ===== */
+.category-list {
+    max-height: 500px;
     overflow-y: auto;
+}
+
+.category-item {
+    transition: background-color 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.subcategories {
+    margin-top: 5px;
+}
+
+.subcategories .badge {
     background-color: #f8f9fa;
-    scrollbar-width: thin;
+    color: #495057;
 }
 
-.icon-selector-container::-webkit-scrollbar {
-    width: 8px;
+.category-tree-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
 }
 
-.icon-selector-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
+.subcategory-item {
+    border-left: 2px solid #f0f0f0;
+    padding-left: 10px;
 }
 
-.icon-selector-container::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 4px;
+/* Cores para tipos de categoria */
+.category-item[data-type="Despesa"] {
+    border-left-color: var(--fn-expense);
 }
 
-.icon-selector-container::-webkit-scrollbar-thumb:hover {
-    background: #999;
+.category-item[data-type="Receita"] {
+    border-left-color: var(--fn-income);
 }
 
-.icon-category {
-    font-weight: bold;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 3px;
+/* Ícones */
+.text-expense {
+    color: var(--fn-expense);
 }
 
-.icon-category:first-child {
-    margin-top: 0;
+.text-income {
+    color: var(--fn-income);
 }
 
-.icon-grid-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 10px;
+/* Colapsar/expandir nos itens de árvore */
+.category-tree-item .bi-caret-down-fill,
+.category-tree-item .bi-caret-right-fill {
+    cursor: pointer;
+    color: var(--fn-medium-green);
+    font-size: 0.8rem;
 }
 
-.icon-select-btn, .icon-select-btn-receita, .icon-select-btn-origem, .icon-select-btn-destino {
-    width: 42px;
-    height: 42px;
-    padding: 8px;
-    border-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Toast notifications */
+.toast-container {
+    z-index: 1060;
+    right: 20px;
+    bottom: 20px;
 }
 
-.icon-select-btn i, .icon-select-btn-receita i, .icon-select-btn-origem i, .icon-select-btn-destino i {
-    font-size: 18px;
+.toast {
+    min-width: 250px;
 }
 
-/* Cores específicas para cada tipo de transação */
-.icon-select-btn.active {
-    background-color: #dc3545;
-    color: white;
-    border-color: #dc3545;
+/* Botões de ação nas categorias */
+.category-actions .btn-link {
+    padding: 0.25rem 0.5rem;
+    color: #6c757d;
 }
 
-.icon-select-btn-receita.active {
-    background-color: #28a745;
-    color: white;
-    border-color: #28a745;
+.category-actions .btn-link:hover {
+    color: var(--fn-dark-green);
 }
 
-.icon-select-btn-origem.active, .icon-select-btn-destino.active {
-    background-color: #0d6efd;
-    color: white;
-    border-color: #0d6efd;
+.category-actions .btn-link.text-danger:hover {
+    color: #dc3545;
 }
 
-/* Melhoria no contraste para modais */
-.modal-body label {
-    color: var(--text);
-    font-weight: 500;
+/* Abas de categorias */
+.nav-tabs .nav-link.active {
+    color: var(--fn-dark-green);
+    font-weight: 600;
+    border-bottom-color: var(--fn-bright-green);
 }
 
-.modal-body input,
-.modal-body select,
-.modal-body textarea {
-    color: var(--text);
+/* Paginação de categorias */
+.pagination-categories {
+    margin-bottom: 0;
 }
 
-.modal-body .custom-control-label {
-    color: var(--text);
+.pagination-categories .page-link {
+    color: var(--fn-dark-green);
 }
 
-/* ========== RESPONSIVIDADE ========== */
-@media (max-width: 767.98px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-    
-    .sidebar-sticky {
-        height: auto;
-    }
-    
-    .finance-card {
-        margin-bottom: 1rem;
-    }
-}
-
-@media (min-width: 768px) {
-    .sidebar {
-        width: 220px;
-    }
-    
-    .main-content {
-        margin-left: 220px;
-    }
+.pagination-categories .page-item.active .page-link {
+    background-color: var(--fn-dark-green);
+    border-color: var(--fn-dark-green);
 }
