@@ -3,6 +3,7 @@
 // NOME DO ARQUIVO ATUAL
 $arquivo = basename($_SERVER['PHP_SELF']);
 
+require_once "validacao_login.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
