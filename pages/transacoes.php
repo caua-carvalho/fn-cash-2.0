@@ -244,7 +244,7 @@ include_once '../header.php';
                     
                     <div class="form-group">
                         <label for="transaction-type">Tipo de Transação</label>
-                        <select id="transaction-type" class="form-control" required>
+                        <select id="transaction-type" class="form-control" name="tipo" required>
                             <option value="">Selecione o tipo</option>
                             <option value="Despesa">Despesa</option>
                             <option value="Receita">Receita</option>
@@ -257,7 +257,7 @@ include_once '../header.php';
                     
                     <div class="form-group">
                         <label for="transaction-description">Descrição</label>
-                        <input type="text" id="transaction-description" class="form-control" required>
+                        <input type="text" id="transaction-description" class="form-control" name="descricao" required>
                         <div class="invalid-feedback">
                             Por favor, forneça uma descrição.
                         </div>
@@ -269,7 +269,7 @@ include_once '../header.php';
                             <div class="input-group-prepend">
                                 <span class="input-group-text">R$</span>
                             </div>
-                            <input type="text" id="transaction-amount" class="form-control money-input" required>
+                            <input type="text" id="transaction-amount" class="form-control money-input" name="valor" required>
                             <div class="invalid-feedback">
                                 Por favor, forneça um valor válido.
                             </div>
@@ -278,7 +278,7 @@ include_once '../header.php';
                     
                     <div class="form-group">
                         <label for="transaction-date">Data</label>
-                        <input type="text" id="transaction-date" class="form-control datepicker" required>
+                        <input type="text" id="transaction-date" class="form-control datepicker" name="data" required>
                         <div class="invalid-feedback">
                             Por favor, forneça uma data válida.
                         </div>
@@ -286,7 +286,7 @@ include_once '../header.php';
                     
                     <div class="form-group">
                         <label for="transaction-account">Conta</label>
-                        <select id="transaction-account" class="form-control" required>
+                        <select id="transaction-account" class="form-control" name="conta" required>
                             <option value="">Selecione uma conta</option>
                             <option value="1">Conta Corrente</option>
                             <option value="2">Poupança</option>
@@ -299,7 +299,7 @@ include_once '../header.php';
                     
                     <div id="category-field" class="form-group">
                         <label for="transaction-category">Categoria</label>
-                        <select id="transaction-category" class="form-control">
+                        <select id="transaction-category" class="form-control" name="categoria">
                             <option value="">Selecione uma categoria</option>
                             <!-- Categorias carregadas dinamicamente via JavaScript -->
                         </select>
@@ -310,7 +310,7 @@ include_once '../header.php';
                     
                     <div id="destiny-account-field" class="form-group d-none">
                         <label for="transaction-destiny-account">Conta de Destino</label>
-                        <select id="transaction-destiny-account" class="form-control">
+                        <select id="transaction-destiny-account" class="form-control" name="conta_destino">
                             <option value="">Selecione a conta de destino</option>
                             <option value="1">Conta Corrente</option>
                             <option value="2">Poupança</option>
@@ -323,7 +323,7 @@ include_once '../header.php';
                     
                     <div class="form-group">
                         <label for="transaction-status">Status</label>
-                        <select id="transaction-status" class="form-control" required>
+                        <select id="transaction-status" class="form-control" name="status" required>
                             <option value="Pendente">Pendente</option>
                             <option value="Efetivada" selected>Efetivada</option>
                             <option value="Cancelada">Cancelada</option>
