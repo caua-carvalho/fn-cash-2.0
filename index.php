@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['id'] = $usuario['ID_Usuario'];
             $_SESSION['nome'] = $usuario['Nome'];
             $_SESSION['email'] = $usuario['Email'];
+            
             header("Location: pages/transacoes.php");
             exit();
         } else {

@@ -2,9 +2,12 @@
 
 // Incluir o cabeçalho
 include_once 'header.php';
+require_once "funcoes.php";
 
 // CADASTRO DE CATEGORIA
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    header("Location: transacoes.php");
+}
 ?>
 
 <!-- Conteúdo da Página de Categorias -->
@@ -555,9 +558,9 @@ include_once 'header.php';
                 </button>
             </div>
             <div class="modal-body">
-                <form id="category-form" class="needs-validation" novalidate method="POST">
-                    <input type="hidden" id="category-id">
-                    <input type="hidden" id="category-parent-id">
+                <form id="category-form" method="POST" action="categorias.php">
+                    <input type="hidden" id="category-id" name="id">
+                    <input type="hidden" id="category-parent-id" name="parent_id">
                     
                     <div class="form-group">
                         <label for="category-name">Nome da Categoria</label>
@@ -569,10 +572,10 @@ include_once 'header.php';
                     
                     <div class="form-group">
                         <label for="category-type">Tipo</label>
-                        <select class="form-control" id="category-type" nome="tipo" required>
+                        <select class="form-control" id="category-type" name="tipo" required>
                             <option value="">Selecione um tipo</option>
-                            <option value="Despesa">Despesa</option>
-                            <option value="Receita">Receita</option>
+                            <option value="0">Despesa</option>
+                            <option value="1">Receita</option>
                         </select>
                         <div class="invalid-feedback">
                             Por favor, selecione um tipo.
@@ -581,7 +584,7 @@ include_once 'header.php';
                     
                     <div class="form-group">
                         <label for="category-parent">Categoria Pai (opcional)</label>
-                        <select class="form-control" id="category-parent" name="categoria-pai">
+                        <select class="form-control" id="category-parent" name="categoria_pai">
                             <option value="">Nenhuma (categoria principal)</option>
                             <!-- Categorias carregadas dinamicamente via JavaScript -->
                         </select>
@@ -598,11 +601,11 @@ include_once 'header.php';
                             <label class="custom-control-label" for="category-active">Categoria Ativa</label>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                <button type="submit" form="category-form" class="btn btn-primary">Salvar</button>
             </div>
         </div>
     </div>
