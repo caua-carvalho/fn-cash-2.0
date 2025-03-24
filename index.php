@@ -1,6 +1,7 @@
 <?php
 session_start();
 require 'conexao.php';
+// require 'validacao_login.php';
 
 $error = '';
 $success = '';
