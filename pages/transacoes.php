@@ -5,7 +5,7 @@
  */
 
 // Incluir o cabeçalho
-include_once '../header.php';
+include_once 'header.php';
 ?>
 
 <!-- Conteúdo da Página de Transações -->
