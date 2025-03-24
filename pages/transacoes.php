@@ -46,7 +46,7 @@ include_once '../header.php';
     <!-- Painel de Filtros -->
     <div class="card mb-4">
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Filtros</h5>
+            <h5 class="mb-0" style="color: #333;">Filtros</h5>
             <button id="filter-toggle" class="btn btn-sm btn-link text-muted">
                 <i class="bi bi-chevron-down"></i>
             </button>
