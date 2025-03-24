@@ -34,6 +34,9 @@ $arquivo = basename($_SERVER['PHP_SELF']);
     
     <!-- Chart.js para gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+
+    <!-- ICONE NA GUIA -->
+    <link rel="icon" type="image/svg+xml" href="../img/icone.svg">
 </head>
 <body>
     <div class="wrapper">
