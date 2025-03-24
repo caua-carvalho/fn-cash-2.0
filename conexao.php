@@ -4,6 +4,6 @@ $usuario = 'root';
 $senha = '';
 $database = 'fncash';
 
-$conexao = new mysqli($host, $usuario, $senha, $database);
+$conn = new mysqli($host, $usuario, $senha, $database);
 
 ?>
