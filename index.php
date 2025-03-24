@@ -20,8 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $usuario = $result->fetch_assoc();
 
         if ($usuario && password_verify($password, $usuario['Senha'])) {
-            $_SESSION['id'] = $usuario['id'];
-            $_SESSION['nome'] = $usuario['nome'];
+            $_SESSION['id'] = $usuario['ID_Usuario'];
+            $_SESSION['nome'] = $usuario['Nome'];
+            $_SESSION['email'] = $usuario['Email'];
             header("Location: pages/transacoes.php");
             exit();
         } else {
