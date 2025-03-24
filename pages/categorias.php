@@ -1,8 +1,4 @@
 <?php
-/**
- * FN-CASH - Sistema de Controle Financeiro Pessoal
- * Página de Categorias
- */
 
 // Incluir o cabeçalho
 include_once 'header.php';
