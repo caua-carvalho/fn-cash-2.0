@@ -6,6 +6,9 @@
 
 // Incluir o cabeçalho
 include_once '../header.php';
+
+// CADASTRO DE CATEGORIA
+
 ?>
 
 <!-- Conteúdo da Página de Categorias -->
@@ -562,7 +565,7 @@ include_once '../header.php';
                     
                     <div class="form-group">
                         <label for="category-name">Nome da Categoria</label>
-                        <input type="text" class="form-control" id="category-name" required>
+                        <input type="text" class="form-control" id="category-name" name="nome" required>
                         <div class="invalid-feedback">
                             Por favor, informe um nome para a categoria.
                         </div>
@@ -570,7 +573,7 @@ include_once '../header.php';
                     
                     <div class="form-group">
                         <label for="category-type">Tipo</label>
-                        <select class="form-control" id="category-type" required>
+                        <select class="form-control" id="category-type" nome="tipo" required>
                             <option value="">Selecione um tipo</option>
                             <option value="Despesa">Despesa</option>
                             <option value="Receita">Receita</option>
@@ -582,7 +585,7 @@ include_once '../header.php';
                     
                     <div class="form-group">
                         <label for="category-parent">Categoria Pai (opcional)</label>
-                        <select class="form-control" id="category-parent">
+                        <select class="form-control" id="category-parent" name="categoria-pai">
                             <option value="">Nenhuma (categoria principal)</option>
                             <!-- Categorias carregadas dinamicamente via JavaScript -->
                         </select>
@@ -590,12 +593,12 @@ include_once '../header.php';
                     
                     <div class="form-group">
                         <label for="category-description">Descrição (opcional)</label>
-                        <textarea class="form-control" id="category-description" rows="3"></textarea>
+                        <textarea class="form-control" id="category-description" name="descricao" rows="3"></textarea>
                     </div>
                     
                     <div class="form-group">
                         <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="category-active" checked>
+                            <input type="checkbox" class="custom-control-input" id="category-active" name="status" checked>
                             <label class="custom-control-label" for="category-active">Categoria Ativa</label>
                         </div>
                     </div>
