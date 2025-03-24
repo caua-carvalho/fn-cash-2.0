@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'conexao.php';
-// require 'validacao_login.php';
+require 'validacao_login.php';
 
 $error = '';
 $success = '';
@@ -14,16 +14,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($user_input) || empty($password)) {
         $error = "Todos os campos são obrigatórios.";
     } else {
-        $stmt = $conexao->prepare("SELECT * FROM usuario WHERE email = ? OR nome = ?");
+        $stmt = $conn->prepare("SELECT * FROM usuario WHERE email = ? OR nome = ?");
         $stmt->bind_param("ss", $user_input, $user_input);
         $stmt->execute();
         $result = $stmt->get_result();
         $usuario = $result->fetch_assoc();
 
-        if ($usuario && password_verify($password, $usuario['senha'])) {
+        if ($usuario && password_verify($password, $usuario['Senha'])) {
             $_SESSION['id'] = $usuario['id'];
             $_SESSION['nome'] = $usuario['nome'];
-            header("Location: pages/dashboard.php");
+            header("Location: pages/transacoes.php");
             exit();
         } else {
             $error = "Credenciais inválidas.";
