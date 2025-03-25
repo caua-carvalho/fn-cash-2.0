@@ -13,13 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($user_input) || empty($password)) {
         $error = "Todos os campos são obrigatórios.";
     } else {
-        $stmt = $conn->prepare("SELECT * FROM usuario WHERE email = ? OR nome = ?");
+        $stmt = $conn->prepare("SELECT * FROM USUARIO WHERE Email = ? OR Nome = ?");
         $stmt->bind_param("ss", $user_input, $user_input);
         $stmt->execute();
         $result = $stmt->get_result();
         $usuario = $result->fetch_assoc();
 
-        if ($usuario && password_verify($password, $usuario['Senha'])) {
+        if ($usuario['Senha'] && password_verify($password, $usuario['Senha'])) {
             $_SESSION['id'] = $usuario['ID_Usuario'];
             $_SESSION['nome'] = $usuario['Nome'];
             $_SESSION['email'] = $usuario['Email'];
