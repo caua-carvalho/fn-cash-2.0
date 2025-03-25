@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tipo = $_POST['tipo'];
     $categoria_pai = !empty($_POST['categoria_pai']) ? $_POST['categoria_pai'] : null;
     $descricao = $_POST['descricao'];
-    $status = isset($_POST['status']) ? 1 : 0;
+    $status = isset($_POST['status']);
     $id_usuario = $_SESSION['id_usuario']; // Assumindo que o ID do usuário está na sessão
     
     // Chamar a função de cadastro
