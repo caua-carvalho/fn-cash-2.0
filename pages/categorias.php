@@ -6,7 +6,13 @@ require_once "funcoes.php";
 
 // CADASTRO DE CATEGORIA
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    header("Location: transacoes.php");
+    cadastrar_categoia( $_POST['nome'],
+                        $_POST['tipo'],
+                        !empty($_POST['categoria_pai']) ? $_POST['categoria_pai'] : null,
+                        $_POST['categoria_pai'],
+                        $_POST['descricao'],
+                        isset($_POST['status']),
+                        $_SESSION['id']);
 }
 ?>
 
