@@ -591,6 +591,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label for="category-parent">Categoria Pai (opcional)</label>
                         <select class="form-control" id="category-parent" name="categoria_pai">
                             <option value="">Nenhuma (categoria principal)</option>
+                            <?php 
+                            echo "<option>teste</option>";
+                            ?>
                             <!-- Categorias carregadas dinamicamente via JavaScript -->
                         </select>
                     </div>
