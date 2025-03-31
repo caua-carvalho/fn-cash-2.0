@@ -67,85 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </div>
                         <div class="card-body p-0">
                             <div class="list-group list-group-flush category-list" id="expense-categories">
-                                <!-- Categorias carregadas via JavaScript -->
-                                <div class="list-group-item category-item">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <span class="category-name">Alimentação</span>
-                                            <div class="subcategories">
-                                                <span class="badge badge-light mr-1">Mercado</span>
-                                                <span class="badge badge-light mr-1">Restaurantes</span>
-                                                <span class="badge badge-light">Delivery</span>
-                                            </div>
-                                        </div>
-                                        <div class="category-actions">
-                                            <button class="btn btn-sm btn-link edit-category" data-id="5">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-link text-danger delete-category" data-id="5">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="list-group-item category-item">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <span class="category-name">Moradia</span>
-                                            <div class="subcategories">
-                                                <span class="badge badge-light mr-1">Aluguel</span>
-                                                <span class="badge badge-light mr-1">Contas</span>
-                                                <span class="badge badge-light">Manutenção</span>
-                                            </div>
-                                        </div>
-                                        <div class="category-actions">
-                                            <button class="btn btn-sm btn-link edit-category" data-id="6">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-link text-danger delete-category" data-id="6">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="list-group-item category-item">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <span class="category-name">Transporte</span>
-                                            <div class="subcategories">
-                                                <span class="badge badge-light mr-1">Combustível</span>
-                                                <span class="badge badge-light">Transporte Público</span>
-                                            </div>
-                                        </div>
-                                        <div class="category-actions">
-                                            <button class="btn btn-sm btn-link edit-category" data-id="7">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-link text-danger delete-category" data-id="7">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="list-group-item category-item">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <span class="category-name">Saúde</span>
-                                            <div class="subcategories">
-                                                <span class="badge badge-light mr-1">Médicos</span>
-                                                <span class="badge badge-light">Medicamentos</span>
-                                            </div>
-                                        </div>
-                                        <div class="category-actions">
-                                            <button class="btn btn-sm btn-link edit-category" data-id="8">
-                                                <i class="bi bi-pencil"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-link text-danger delete-category" data-id="8">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <!-- Categorias carregadas via função -->
+                                <?php exibir_categoria("Despesa"); ?>
                             </div>
                         </div>
                     </div>
@@ -243,23 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <ul class="list-unstyled">
                             <!-- Alimentação -->
                             <li class="category-tree-item mb-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <i class="bi bi-caret-down-fill"></i>
-                                        <strong>Alimentação</strong>
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-sm btn-outline-primary add-subcategory" data-id="5">
-                                            <i class="bi bi-plus-circle"></i> Subcategoria
-                                        </button>
-                                        <button class="btn btn-sm btn-link edit-category" data-id="5">
-                                            <i class="bi bi-pencil"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-link text-danger delete-category" data-id="5">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
+                                <?php exibir_categoria(1); ?>
                                 <ul class="list-unstyled ml-4 mt-2">
                                     <li class="subcategory-item">
                                         <div class="d-flex justify-content-between align-items-center py-1">
