@@ -4,7 +4,8 @@ require_once "../conexao.php";
 
 $arquivo = $_SERVER['PHP_SELF'];
 
-function cadastrar_categoria($nome, $tipo, $categoria_pai, $descricao, $status, $id_usuario){
+function cadastrar_categoria($nome, $tipo, $categoria_pai, $descricao, $status, $id_usuario)
+{
     global $conn;
     global $arquivo;
 
@@ -16,12 +17,12 @@ function cadastrar_categoria($nome, $tipo, $categoria_pai, $descricao, $status, 
     $stmt->bind_param("ss", $nome, $tipo);
     $stmt->execute();
     $result = $stmt->get_result();
-    
-    if($result->num_rows > 0){
+
+    if ($result->num_rows > 0) {
         $stmt->close();
         header("Location: categorias.php?result=existente");
         exit;
-    } 
+    }
 
     $stmt->close();
     $stmt = $conn->prepare("INSERT INTO CATEGORIA (Nome, Tipo, Descricao, Ativa, ID_CategoriaPai, ID_Usuario) VALUES (?, ?, ?, ?, ?, ?)");
@@ -29,9 +30,9 @@ function cadastrar_categoria($nome, $tipo, $categoria_pai, $descricao, $status, 
         die("Erro ao preparar a consulta: " . $conn->error);
     }
 
-    $stmt->bind_param("ssssii", $nome, $tipo, $descricao, $status, $categoria_pai, $id_usuario);  
-    
-    if($stmt->execute()) {
+    $stmt->bind_param("ssssii", $nome, $tipo, $descricao, $status, $categoria_pai, $id_usuario);
+
+    if ($stmt->execute()) {
         $stmt->close();
         header("Location: categorias.php?result=sucesso");
     } else {
@@ -41,9 +42,10 @@ function cadastrar_categoria($nome, $tipo, $categoria_pai, $descricao, $status, 
     exit;
 }
 
-function exibir_categorias_form() {
+function exibir_categorias_form()
+{
     global $conn;
-    
+
     $categorias = [];
     $query = "SELECT ID_Categoria, Nome, Tipo FROM CATEGORIA ORDER BY Nome ASC";
 
@@ -60,25 +62,26 @@ function exibir_categorias_form() {
     return $categorias; // Retorna o array de categorias\   
 }
 
-function exibir_categoria($tipo) {
+function exibir_categoria($tipo)
+{
     global $conn;
-    
+
     // Definindo tipo = 0 para despesas por padrão
     $sql = "SELECT ID_Categoria, Nome, Tipo, ID_CategoriaPai FROM CATEGORIA WHERE Ativa = 1 AND Tipo = ? AND ID_CategoriaPai IS NULL ORDER BY ID_Categoria DESC";
-    
+
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $tipo);
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     if ($result->num_rows > 0) {
-        
+
         // Exibir categorias principais
         while ($categoria = $result->fetch_assoc()) {
-           echo '<div class="list-group-item category-item">
+            echo '<div class="list-group-item category-item">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <span class="category-name">' . $categoria['Nome'] .'</span>
+                            <span class="category-name">' . $categoria['Nome'] . '</span>
                             <div class="subcategories">
                                 <span class="badge badge-light mr-1">Mercado</span>
                                 <span class="badge badge-light mr-1">Restaurantes</span>
@@ -101,30 +104,31 @@ function exibir_categoria($tipo) {
         echo '<div class="list-group-item category-item">
                   <div class="d-flex justify-content-between align-items-center">
                       <div>
-                            <span class="category-name">' . $categoria['Nome'] .'</span>
+                            <span class="category-name">Nenhuma categoria cadastrada!</span>
                       </div>
                   </div>
               </div>';
     }
-    
+
     $stmt->close();
 }
 
 // Função auxiliar para obter HTML das subcategorias
-function obter_subcategorias($id_pai) {
+function obter_subcategorias($id_pai)
+{
     global $conn;
-    
+
     $sql = "SELECT ID_categoria, Nome FROM CATEGORIA WHERE Ativa = 1 AND ID_CategoriaPai = ? ORDER BY Nome";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_pai);
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     $html = '';
-    
+
     if ($result->num_rows > 0) {
         $html .= "<div class='subcategorias-container ms-4 mt-2'>";
-        
+
         while ($subcategoria = $result->fetch_assoc()) {
             $html .= "<div class='subcategoria-item d-flex justify-content-between align-items-center mb-1'>
                 <div>
@@ -140,12 +144,12 @@ function obter_subcategorias($id_pai) {
                 </div>
             </div>";
         }
-        
+
         $html .= "</div>";
     }
-    
+
     $stmt->close();
-    
+
     return $html;
 }
 
