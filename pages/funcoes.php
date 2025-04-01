@@ -1,6 +1,5 @@
 <?php
 // Incluir o cabeçalho
-include_once 'header.php';
 require_once "../conexao.php";
 
 $arquivo = $_SERVER['PHP_SELF'];
@@ -9,28 +8,56 @@ function cadastrar_categoria($nome, $tipo, $categoria_pai, $descricao, $status, 
     global $conn;
     global $arquivo;
 
-    $stmt = $conn->prepare("SELECT nome FROM CATEGORIA WHERE nome = ?");
-    $stmt->bind_param("s", $nome);
+    $stmt = $conn->prepare("SELECT nome FROM CATEGORIA WHERE nome = ? AND Tipo = ?");
+    if (!$stmt) {
+        die("Erro ao preparar a consulta: " . $conn->error);
+    }
+
+    $stmt->bind_param("ss", $nome, $tipo);
     $stmt->execute();
     $result = $stmt->get_result();
     
     if($result->num_rows > 0){
-        return "categoria_ja_cadastrada";
-    } else {
-        $stmt = $conn->prepare("INSERT INTO CATEGORIA (Nome, Tipo, Descricao, Ativa, ID_CategoriaPai, ID_Usuario) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sissii", $nome, $tipo, $descricao, $status, $categoria_pai, $id_usuario);  
-        
-        if($stmt->execute()) {
-            return "SUCESSO";
-            header("Location: categorias.php");
-        } else {
-            return "ERRO";
-            header("Location: categorias.php");
-        }   
-
         $stmt->close();
-        header("Location: categorias.php");
+        header("Location: categorias.php?result=existente");
+        exit;
+    } 
+
+    $stmt->close();
+    $stmt = $conn->prepare("INSERT INTO CATEGORIA (Nome, Tipo, Descricao, Ativa, ID_CategoriaPai, ID_Usuario) VALUES (?, ?, ?, ?, ?, ?)");
+    if (!$stmt) {
+        die("Erro ao preparar a consulta: " . $conn->error);
     }
+
+    $stmt->bind_param("ssssii", $nome, $tipo, $descricao, $status, $categoria_pai, $id_usuario);  
+    
+    if($stmt->execute()) {
+        $stmt->close();
+        header("Location: categorias.php?result=sucesso");
+    } else {
+        $stmt->close();
+        header("Location: categorias.php?result=erro");
+    }
+    exit;
+}
+
+function exibir_categorias_form() {
+    global $conn;
+    
+    $categorias = [];
+    $query = "SELECT ID_Categoria, Nome, Tipo FROM CATEGORIA ORDER BY Nome ASC";
+
+    if ($result = $conn->query($query)) {
+        while ($row = $result->fetch_assoc()) {
+            $categorias[] = [
+                'id' => $row['ID_Categoria'],
+                'nome' => $row['Nome'],
+                'tipo' => $row['Tipo']
+            ];
+        }
+    }
+
+    return $categorias; // Retorna o array de categorias
 }
 
 function exibir_categoria($tipo) {
@@ -52,31 +79,25 @@ function exibir_categoria($tipo) {
            echo '<div class="list-group-item category-item">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <span class="category-name">' . $categoria["Nome"] . '</span>
+                            <span class="category-name">' . $categoria['Nome'] .'</span>
                             <div class="subcategories">
-                                <span class="badge badge-light mr-1">Aluguel</span>
-                                <span class="badge badge-light mr-1">Contas</span>
-                                <span class="badge badge-light">Manutenção</span>
+                                <span class="badge badge-light mr-1">Mercado</span>
+                                <span class="badge badge-light mr-1">Restaurantes</span>
+                                <span class="badge badge-light">Delivery</span>
                             </div>
                         </div>
                         <div class="category-actions">
-                            <button class="btn btn-sm btn-link edit-category" data-id="6">
+                            <button class="btn btn-sm btn-link edit-category" data-id="5">
                                 <i class="bi bi-pencil"></i>
                             </button>
-                            <button class="btn btn-sm btn-link text-danger delete-category" data-id="6">
+                            <button class="btn btn-sm btn-link text-danger delete-category" data-id="5">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </div>
                     </div>
                 </div>';
-            
-            // Buscar e exibir subcategorias
-            $html .= obter_subcategorias($categoria['ID_Categoria']);
-            
-            $html .= "</div>";
         }
-        
-        $html .= "</div>";
+
     } else {
         $html .= "<p>Nenhuma despesa cadastrada.</p>";
     }

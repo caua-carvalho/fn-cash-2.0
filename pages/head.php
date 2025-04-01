@@ -38,6 +38,9 @@ require_once "validacao_login.php";
 
     <!-- ICONE NA GUIA -->
     <link rel="icon" type="image/svg+xml" href="../img/icone.svg">
+
+    <!-- JS CUSTOM -->
+    <script src="script.js"></script>
 </head>
 <body>
     <div class="wrapper">

@@ -1,8 +1,10 @@
 <?php
 
 // Incluir o cabeçalho
-include_once 'header.php';
+require_once "../conexao.php";
+require_once "validacao_login.php";
 require_once "funcoes.php";
+
 
 // CADASTRO DE CATEGORIA
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -13,6 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         isset($_POST['status']),
                         $_SESSION['id']);
 }
+
+require_once 'head.php';
+require_once "modal.php";
 ?>
 
 <!-- Conteúdo da Página de Categorias -->
@@ -66,10 +71,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </button>
                         </div>
                         <div class="card-body p-0">
-                            <div class="list-group list-group-flush category-list" id="expense-categories">
-                                <!-- Categorias carregadas via função -->
+                            <!-- Categorias carregadas via JavaScript -->
                                 <?php exibir_categoria("Despesa"); ?>
-                            </div>
+                                <div class="list-group-item category-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="category-name">Transporte</span>
+                                            <div class="subcategories">
+                                                <span class="badge badge-light mr-1">Combustível</span>
+                                                <span class="badge badge-light">Transporte Público</span>
+                                            </div>
+                                        </div>
+                                        <div class="category-actions">
+                                            <button class="btn btn-sm btn-link edit-category" data-id="7">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-link text-danger delete-category" data-id="7">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-group-item category-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span class="category-name">Saúde</span>
+                                            <div class="subcategories">
+                                                <span class="badge badge-light mr-1">Médicos</span>
+                                                <span class="badge badge-light">Medicamentos</span>
+                                            </div>
+                                        </div>
+                                        <div class="category-actions">
+                                            <button class="btn btn-sm btn-link edit-category" data-id="8">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-link text-danger delete-category" data-id="8">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -460,71 +501,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>
 
 <!-- Modal de Categoria -->
-<div class="modal fade" id="category-modal" tabindex="-1" role="dialog" aria-labelledby="category-modal-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="category-modal-title">Nova Categoria</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="category-form" method="POST" action="categorias.php">
-                    <input type="hidden" id="category-id" name="id">
-                    <input type="hidden" id="category-parent-id" name="parent_id">
-                    
-                    <div class="form-group">
-                        <label for="category-name">Nome da Categoria</label>
-                        <input type="text" class="form-control" id="category-name" name="nome" required>
-                        <div class="invalid-feedback">
-                            Por favor, informe um nome para a categoria.
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="category-type">Tipo</label>
-                        <select class="form-control" id="category-type" name="tipo" required>
-                            <option value="">Selecione um tipo</option>
-                            <option value="0">Despesa</option>
-                            <option value="1">Receita</option>
-                        </select>
-                        <div class="invalid-feedback">
-                            Por favor, selecione um tipo.
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="category-parent">Categoria Pai (opcional)</label>
-                        <select class="form-control" id="category-parent" name="categoria_pai">
-                            <option value="">Nenhuma (categoria principal)</option>
-                            <?php 
-                            echo "<option>teste</option>";
-                            ?>
-                            <!-- Categorias carregadas dinamicamente via JavaScript -->
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="category-description">Descrição (opcional)</label>
-                        <textarea class="form-control" id="category-description" name="descricao" rows="3"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="category-active" name="status" checked>
-                            <label class="custom-control-label" for="category-active">Categoria Ativa</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+<?php Modal_categoria(); ?>
 
 <!-- Script específico para a página -->
 <script src="../JavaScript/categorias.js"></script>
