@@ -47,7 +47,7 @@ function exibir_categorias_form() {
     $categorias = [];
     $query = "SELECT ID_Categoria, Nome, Tipo FROM CATEGORIA ORDER BY Nome ASC";
 
-    if ($result = $conn->query($query)) {\  \   
+    if ($result = $conn->query($query)) {
         while ($row = $result->fetch_assoc()) {
             $categorias[] = [
                 'id' => $row['ID_Categoria'],
@@ -64,10 +64,10 @@ function exibir_categoria($tipo) {
     global $conn;
     
     // Definindo tipo = 0 para despesas por padrão
-    $sql = "SELECT ID_Categoria, Nome, Tipo, ID_CategoriaPai FROM CATEGORIA WHERE Ativa = 1 AND Tipo = ? AND ID_CategoriaPai IS NULL ORDER BY Nome";
+    $sql = "SELECT ID_Categoria, Nome, Tipo, ID_CategoriaPai FROM CATEGORIA WHERE Ativa = 1 AND Tipo = ? AND ID_CategoriaPai IS NULL ORDER BY ID_Categoria DESC";
     
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $tipo);
+    $stmt->bind_param("s", $tipo);
     $stmt->execute();
     $result = $stmt->get_result();
     
