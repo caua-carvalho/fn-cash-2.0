@@ -47,7 +47,7 @@ function exibir_categorias_form() {
     $categorias = [];
     $query = "SELECT ID_Categoria, Nome, Tipo FROM CATEGORIA ORDER BY Nome ASC";
 
-    if ($result = $conn->query($query)) {
+    if ($result = $conn->query($query)) {\  \   
         while ($row = $result->fetch_assoc()) {
             $categorias[] = [
                 'id' => $row['ID_Categoria'],
@@ -57,7 +57,7 @@ function exibir_categorias_form() {
         }
     }
 
-    return $categorias; // Retorna o array de categorias
+    return $categorias; // Retorna o array de categorias\   
 }
 
 function exibir_categoria($tipo) {
