@@ -71,7 +71,6 @@ function exibir_categoria($tipo) {
     $stmt->execute();
     $result = $stmt->get_result();
     
-    $html = "";
     if ($result->num_rows > 0) {
         
         // Exibir categorias principais
@@ -99,12 +98,16 @@ function exibir_categoria($tipo) {
         }
 
     } else {
-        $html .= "<p>Nenhuma despesa cadastrada.</p>";
+        echo '<div class="list-group-item category-item">
+                  <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                            <span class="category-name">' . $categoria['Nome'] .'</span>
+                      </div>
+                  </div>
+              </div>';
     }
     
     $stmt->close();
-    
-    echo $html;
 }
 
 // Função auxiliar para obter HTML das subcategorias
