@@ -16,6 +16,7 @@ $categorias = exibir_categorias_form(); // Obtenha o array de categorias
             </div>
             <div class="modal-body">
                 <form id="category-form" method="POST" action="categorias.php">
+                    <input type="hidden" id="form_id" name="form_id" value="criar">
                     <input type="hidden" id="category-id" name="id">
                     <input type="hidden" id="category-parent-id" name="parent_id">
                     
