@@ -8,6 +8,7 @@ require_once "funcoes.php";
 
 // CADASTRO DE CATEGORIA
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
     if (isset($_POST['form_id'])) {
         switch ($_POST['form_id']) {
             case 'edit':
@@ -32,11 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 cadastrar_categoria($nome, $tipo, $categoria_pai, $descricao, $status, $id_usuario);
                 break;
                 
-            case 'delete':
-                $id_categoria = $_POST['id_categoria'];
+            // case 'delete':
+            //     $id_categoria = $_POST['id_categoria'];
 
-                excluir_categoria($id_categoria);
-                break;
+            //     excluir_categoria($id_categoria);
+            //     break;
         }
             
     } else {
