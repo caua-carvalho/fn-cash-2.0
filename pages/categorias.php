@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once 'head.php';
 require_once "modal.php";
 ?>
-
+<h1>TEM QUE ARRUMAR O ENVIO DO FORMULARIO DE CADASTRO</h1>
 <!-- Conteúdo da Página de Categorias -->
 <div id="categorias-page">
     <!-- Cabeçalho da Página -->
