@@ -3,72 +3,53 @@ require_once 'funcoes.php'; // Inclua o arquivo com a função
 $categorias = exibir_categorias_form(); // Obtenha o array de categorias
 ?>
 
-<!-- MODAL PARA CADASTRO DE CATEOGIRA -->
+<!-- MODAL PARA CADASTRO DE CATEGORIA -->
 <div class="modal fade" id="category-modal" tabindex="-1" role="dialog" aria-labelledby="category-modal-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="category-modal-title">Nova Categoria</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form id="category-form" method="POST" action="categorias.php">
-                    <input type="hidden" id="form_id" name="form_id" value="criar">
-                    <input type="hidden" id="category-id" name="id">
-                    <input type="hidden" id="category-parent-id" name="parent_id">
-                    
+            <form id="category-form" method="POST" action="categorias.php">
+                <div class="modal-body">
+                    <input type="hidden" class="form_control" id="form_id" name="form_id" value="criar">
                     <div class="form-group">
                         <label for="category-name">Nome da Categoria</label>
                         <input type="text" class="form-control" id="category-name" name="nome" required>
-                        <div class="invalid-feedback">
-                            Por favor, informe um nome para a categoria.
-                        </div>
                     </div>
-                    
                     <div class="form-group">
                         <label for="category-type">Tipo</label>
                         <select class="form-control" id="category-type" name="tipo" required>
-                            <option value="">Selecione um tipo</option>
-                            <option value="Despesa">Despesa</option>
                             <option value="Receita">Receita</option>
+                            <option value="Despesa">Despesa</option>
                         </select>
-                        <div class="invalid-feedback">
-                            Por favor, selecione um tipo.
-                        </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="category-parent">Categoria Pai (opcional)</label>
+                        <label for="category-parent">Categoria Pai</label>
                         <select id="category-parent" name="categoria_pai" class="form-control">
-                            <option value="">Selecione uma categoria pai</option>
-                            <?php
-                            $categorias = exibir_categorias_form();
-                            foreach ($categorias as $categoria) {
-                                echo '<option value="' . $categoria["id"] . '" data-tipo="' . $categoria["tipo"] . '">' . $categoria["nome"] . '</option>';
-                            }
-                            ?>
+                            <option value="">Nenhuma</option>
+                            <?php foreach ($categorias as $categoria): ?>
+                                <option value="<?= $categoria['id'] ?>"><?= $categoria['nome'] ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
-                    
                     <div class="form-group">
-                        <label for="category-description">Descrição (opcional)</label>
+                        <label for="category-description">Descrição</label>
                         <textarea class="form-control" id="category-description" name="descricao" rows="3"></textarea>
                     </div>
-                    
-                    <div class="form-group">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="category-active" name="status" checked>
-                            <label class="custom-control-label" for="category-active">Categoria Ativa</label>
-                        </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="category-active" name="status" checked>
+                        <label class="form-check-label" for="category-active">Ativa</label>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -86,7 +67,8 @@ $categorias = exibir_categorias_form(); // Obtenha o array de categorias
             <div class="modal-body">
                 <form id="edit-category-form" method="POST" action="editar_categoria.php">
                     <input type="hidden" id="edit-category-id" name="id">
-                    
+                    <input type="hidden" id="form_id" name="form_id" value="editar">
+
                     <div class="form-group">
                         <label for="edit-category-name">Nome da Categoria</label>
                         <input type="text" class="form-control" id="edit-category-name" name="nome" required>
@@ -150,7 +132,11 @@ $categorias = exibir_categorias_form(); // Obtenha o array de categorias
                 <h5 class="modal-title" id="sucessoCategoriaModalLabel">
                     <i class="bi bi-check-circle-fill mr-2"></i>Sucesso!
                 </h5>
-                <a href="categorias.php" class="close text-white" aria-label="Fechar">
+                <a href="categorias.php?
+                         tipo=<?php echo $_GET['tipo'] ?>" 
+                   class="close text-white" 
+                   aria-label="Fechar">
+
                     <span aria-hidden="true">&times;</span>
                 </a>
             </div>
@@ -162,13 +148,14 @@ $categorias = exibir_categorias_form(); // Obtenha o array de categorias
                 <p class="mb-0">A categoria foi adicionada ao sistema e já está disponível para uso.</p>
             </div>
             <div class="modal-footer justify-content-center">
-                <a href="categorias.php" class="btn btn-success px-4">
+                <a href="categorias.php?tipo=<?php echo ($_GET['tipo'] == 'Receita') ? 'receita' : 'despesa'; ?>" class="btn btn-success px-4">
                     <i class="bi bi-check-lg mr-2"></i>OK
                 </a>
             </div>
         </div>
     </div>
 </div>
+
 <!-- ERRO AO CADASTRAR CATEGORIA -->
 <div class="modal fade" id="erroCategoriaModal" tabindex="-1" role="dialog" aria-labelledby="erroCategoriaModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -244,6 +231,22 @@ if (!empty($_GET['result'])) {
         echo '<script>
             $(document).ready(function() {
                 $("#categoriaExistenteModal").modal("show");
+            });
+        </script>';
+    }
+}
+
+if (!empty($_GET['tipo'])){
+    if ($_GET['tipo'] == 'receita') {
+        echo '<script>
+            $(document).ready(function() {
+                $("#category-expense").modal("show");
+            });
+        </script>';
+    } elseif ($_GET['tipo'] == 'despesa') {
+        echo '<script>
+            $(document).ready(function() {
+                $("#category-modal").modal("show");
             });
         </script>';
     }
