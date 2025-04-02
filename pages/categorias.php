@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once 'head.php';
 require_once "modal.php";
 ?>
-
+<h1 style="color: red;">ABA DE DESPESA/RECEITA NAO ESTA FUNCIONANDO!</h1>
 <!-- Conteúdo da Página de Categorias -->
 <div id="categorias-page">
     <!-- Cabeçalho da Página -->
