@@ -47,7 +47,7 @@ function exibir_categorias_form()
     global $conn;
 
     $categorias = [];
-    $query = "SELECT ID_Categoria, Nome, Tipo FROM CATEGORIA ORDER BY Nome ASC";
+    $query = "SELECT ID_Categoria, ID_CategoriaPai, Nome, Tipo FROM CATEGORIA WHERE ID_CategoriaPai IS NULL ORDER BY Nome ASC";
 
     if ($result = $conn->query($query)) {
         while ($row = $result->fetch_assoc()) {
@@ -67,7 +67,7 @@ function exibir_categoria($tipo)
     global $conn;
 
     // Definindo tipo = 0 para despesas por padrão
-    $sql = "SELECT ID_Categoria, Nome, Tipo, ID_CategoriaPai FROM CATEGORIA WHERE Ativa = 1 AND Tipo = ? AND ID_CategoriaPai IS NULL ORDER BY ID_Categoria DESC";
+    $sql = "SELECT ID_Categoria, Nome, Descricao, Ativa, Tipo, ID_CategoriaPai FROM CATEGORIA WHERE Ativa = 1 AND Tipo = ? AND ID_CategoriaPai IS NULL ORDER BY ID_Categoria DESC";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $tipo);
@@ -82,21 +82,23 @@ function exibir_categoria($tipo)
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <span class="category-name">' . $categoria['Nome'] . '</span>
-                            <div class="subcategories">
-                                <span class="badge badge-light mr-1">Mercado</span>
-                                <span class="badge badge-light mr-1">Restaurantes</span>
-                                <span class="badge badge-light">Delivery</span>
-                            </div>
                         </div>
-                        <div class="category-actions">
-                            <button class="btn btn-sm btn-link edit-category" data-id="5">
+                        <div class="category-actions d-flex justify-content-end align-items-center">
+                            <button class="btn btn-sm btn-link edit-category" 
+                                    data-id="' . $categoria['ID_Categoria'] . '" 
+                                    data-name="' . $categoria['Nome'] . '" 
+                                    data-type="' . $categoria['Tipo'] . '" 
+                                    data-parent="' . $categoria['ID_CategoriaPai'] . '" 
+                                    data-description="' . $categoria['Descricao'] . '" 
+                                    data-active="' . $categoria['Ativa'] . '">
                                 <i class="bi bi-pencil"></i>
                             </button>
-                            <button class="btn btn-sm btn-link text-danger delete-category" data-id="5">
+                            <button class="btn btn-sm btn-link text-danger delete-category" data-id="' . $categoria['ID_Categoria'] . '">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </div>
                     </div>
+                    ' . obter_subcategorias($categoria['ID_Categoria']) . '
                 </div>';
         }
 
@@ -113,12 +115,11 @@ function exibir_categoria($tipo)
     $stmt->close();
 }
 
-// Função auxiliar para obter HTML das subcategorias
 function obter_subcategorias($id_pai)
 {
     global $conn;
 
-    $sql = "SELECT ID_categoria, Nome FROM CATEGORIA WHERE Ativa = 1 AND ID_CategoriaPai = ? ORDER BY Nome";
+    $sql = "SELECT ID_categoria as id, Nome FROM CATEGORIA WHERE Ativa = 1 AND ID_CategoriaPai = ? ORDER BY Nome";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_pai);
     $stmt->execute();
@@ -127,33 +128,38 @@ function obter_subcategorias($id_pai)
     $html = '';
 
     if ($result->num_rows > 0) {
-        $html .= "<div class='subcategorias-container ms-4 mt-2'>";
+        $html .= "<div class='subcategories'>";
 
         while ($subcategoria = $result->fetch_assoc()) {
-            $html .= "<div class='subcategoria-item d-flex justify-content-between align-items-center mb-1'>
-                <div>
-                    <i class='bi bi-dash'></i> " . htmlspecialchars($subcategoria['Nome']) . "
-                </div>
-                <div>
-                    <button class='btn btn-sm btn-link edit-category' data-id='" . $subcategoria['ID'] . "'>
-                        <i class='bi bi-pencil'></i>
-                    </button>
-                    <button class='btn btn-sm btn-link text-danger delete-category' data-id='" . $subcategoria['ID'] . "'>
-                        <i class='bi bi-trash'></i>
-                    </button>
-                </div>
-            </div>";
+            $html .= '<span class="badge badge-light mr-1" data-id="' . $subcategoria["id"] . '">' . $subcategoria["Nome"] . '</span>';
         }
 
         $html .= "</div>";
+    } else {
+        $html .= "";
     }
 
     $stmt->close();
-
     return $html;
 }
 
-// Exemplo de uso:
-// exibir_categoria(); // Vai exibir todas as despesas (tipo = 0)
+function editar_categoria($ID_Categoria, $Nome, $Tipo, $ID_CategoriaPai, $Descricao, $Ativa)
+{
+    global $conn;
+    global $arquivo;
 
+    $stmt = $conn->prepare("UPDATE CATEGORIA SET Nome = ?, Tipo = ?, ID_CategoriaPai = ?, Descricao = ?, Ativa = ? WHERE ID_Categoria = ?");
+    if (!$stmt) {
+        die("Erro ao preparar a consulta: " . $conn->error);
+    }
+
+    $stmt->bind_param("ssissi", $Nome, $Tipo, $ID_CategoriaPai, $Descricao, $Ativa, $ID_Categoria);
+
+    if ($stmt->execute()) {
+        header("Location: categorias.php?result=sucesso");
+    } else {
+        header("Location: categorias.php?result=erro");
+    }
+    exit;
+}   
 ?>

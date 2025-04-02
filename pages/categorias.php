@@ -8,12 +8,38 @@ require_once "funcoes.php";
 
 // CADASTRO DE CATEGORIA
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    cadastrar_categoria( $_POST['nome'],
-                        $_POST['tipo'],
-                        !empty($_POST['categoria_pai']) ? $_POST['categoria_pai'] : null,
-                        $_POST['descricao'],
-                        isset($_POST['status']),
-                        $_SESSION['id']);
+    if (isset($_POST['form_id'])) {
+        switch ($_POST['form_id']) {
+            case 'edit':
+                $id_categoria = $_POST['id_categoria'];
+                $nome = $_POST['nome'];
+                $tipo = $_POST['tipo'];
+                $descricao = $_POST['descricao'];
+                $status = isset($_POST['status']) ? 1 : 0;
+                $categoria_pai = !empty($_POST['categoria_pai']) ? $_POST['categoria_pai'] : null;
+
+                editar_categoria($id_categoria, $nome, $tipo, $descricao, $status, $categoria_pai);
+                break;
+
+            case 'criar':
+                $nome = $_POST['nome'];
+                $tipo = $_POST['tipo'];
+                $categoria_pai = !empty($_POST['categoria_pai']) ? $_POST['categoria_pai'] : null;
+                $descricao = $_POST['descricao'];
+                $status = isset($_POST['status']) ? 1 : 0;
+                $id_usuario = $_SESSION['id'];
+
+                cadastrar_categoria($nome, $tipo, $categoria_pai, $descricao, $status, $id_usuario);
+                break;
+                
+            case 'delete':
+                $id_categoria = $_POST['id_categoria'];
+
+                excluir_categoria($id_categoria);
+                break;
+        }
+            
+    }
 }
 
 require_once 'head.php';
@@ -146,8 +172,6 @@ require_once "modal.php";
     </div>
 </div>
 
-<!-- Modal de Categoria -->
-<?php Modal_categoria(); ?>
 
 <!-- Script específico para a página -->
 <script src="../JavaScript/categorias.js"></script>
