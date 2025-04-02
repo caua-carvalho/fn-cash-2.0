@@ -34,7 +34,7 @@ function cadastrar_categoria($nome, $tipo, $categoria_pai, $descricao, $status, 
 
     if ($stmt->execute()) {
         $stmt->close();
-        header("Location: categorias.php?result=sucesso");
+        header("Location: categorias.php?result=sucesso&tipo=" . urlencode($tipo));
     } else {
         $stmt->close();
         header("Location: categorias.php?result=erro");
