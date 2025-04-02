@@ -5,7 +5,6 @@ $categorias = exibir_categorias_form(); // Obtenha o array de categorias
 
 <!-- MODAL PARA CADASTRO DE CATEOGIRA -->
 <div class="modal fade" id="category-modal" tabindex="-1" role="dialog" aria-labelledby="category-modal-label" aria-hidden="true">
-    <input type="hidden" id="form_id" name="form_id" value="criar">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">

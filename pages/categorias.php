@@ -39,13 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break;
         }
             
+    } else {
+        echo "<script>alert('Erro: Formulário não encontrado.');</script>";
     }
 }
 
 require_once 'head.php';
 require_once "modal.php";
 ?>
-<h1>TEM QUE ARRUMAR O ENVIO DO FORMULARIO DE CADASTRO</h1>
+
 <!-- Conteúdo da Página de Categorias -->
 <div id="categorias-page">
     <!-- Cabeçalho da Página -->
@@ -76,6 +78,11 @@ require_once "modal.php";
         <li class="nav-item" role="presentation">
             <a class="nav-link" id="income-tab" data-toggle="tab" href="#income" role="tab" aria-controls="income" aria-selected="false">
                 <i class="bi bi-arrow-up-circle text-income"></i> Receitas
+            </a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="disabled-tab" data-toggle="tab" href="#disabled" role="tab" aria-controls="disabled" aria-selected="false">
+                <i class="bi bi-slash-circle text-secondary"></i> Desativadas
             </a>
         </li>
     </ul>
@@ -122,49 +129,34 @@ require_once "modal.php";
             </div>
         </div>
         
-        <!-- Somente Despesas -->
-        <div class="tab-pane fade" id="expense" role="tabpanel" aria-labelledby="expense-tab">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">
-                        <i class="bi bi-arrow-down-circle text-expense"></i> Categorias de Despesas
-                    </h5>
-                    <button class="btn btn-sm btn-outline-primary" id="add-expense-category-tab">
-                        <i class="bi bi-plus"></i> Nova Categoria
-                    </button>
-                </div>
-                <div class="card-body p-0">
-                    <!-- Visualização Hierárquica -->
-                    <div class="category-tree p-3">
-                        <ul class="list-unstyled">
-                            <!-- Alimentação -->
-                            <li class="category-tree-item mb-3">
-                                <?php exibir_categoria("Despesa"); ?>
-                            </li>
-                        </ul>
+        <!-- Categorias Desativadas -->
+        <div class="tab-pane fade" id="disabled" role="tabpanel" aria-labelledby="disabled-tab">
+            <div class="row">
+                <!-- Categorias de Despesas Desativadas -->
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-arrow-down-circle text-expense"></i> Despesas Desativadas
+                            </h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <?php exibir_categoria_desativada("Despesa"); ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Somente Receitas -->
-        <div class="tab-pane fade" id="income" role="tabpanel" aria-labelledby="income-tab">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">
-                        <i class="bi bi-arrow-up-circle text-income"></i> Categorias de Receitas
-                    </h5>
-                    <button class="btn btn-sm btn-outline-primary" id="add-income-category-tab">
-                        <i class="bi bi-plus"></i> Nova Categoria
-                    </button>
-                </div>
-                <div class="card-body p-0">
-                    <!-- Visualização Hierárquica -->
-                    <div class="category-tree p-3">
-                        <ul class="list-unstyled">
-                            <!-- Salário -->
-                            <?php exibir_categoria("Receita"); ?>
-                        </ul>
+                
+                <!-- Categorias de Receitas Desativadas -->
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-arrow-up-circle text-income"></i> Receitas Desativadas
+                            </h5>
+                        </div>
+                        <div class="card-body p-0">
+                            <?php exibir_categoria_desativada("Receita"); ?>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -162,4 +162,38 @@ function editar_categoria($ID_Categoria, $Nome, $Tipo, $ID_CategoriaPai, $Descri
     }
     exit;
 }   
+
+function exibir_categoria_desativada($tipo)
+{
+    global $conn;
+
+    $sql = "SELECT ID_Categoria, Nome, Descricao, Ativa, Tipo, ID_CategoriaPai FROM CATEGORIA WHERE Ativa = 0 AND Tipo = ? ORDER BY Nome ASC";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $tipo);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        while ($categoria = $result->fetch_assoc()) {
+            echo '<div class="list-group-item category-item">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="category-name">' . $categoria['Nome'] . '</span>
+                        </div>
+                    </div>
+                </div>';
+        }
+    } else {
+        echo '<div class="list-group-item category-item">
+                  <div class="d-flex justify-content-between align-items-center">
+                      <div>
+                            <span class="category-name">Nenhuma categoria desativada!</span>
+                      </div>
+                  </div>
+              </div>';
+    }
+
+    $stmt->close();
+}
 ?>
