@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 require_once 'head.php';
 require_once "modal.php";
 ?>
-<h1 style="color: red;">ABA DE DESPESA/RECEITA NAO ESTA FUNCIONANDO!</h1>
+
 <!-- Conteúdo da Página de Categorias -->
 <div id="categorias-page">
     <!-- Cabeçalho da Página -->
@@ -130,6 +130,48 @@ require_once "modal.php";
             </div>
         </div>
         
+        <!-- Categoria despesa -->
+        <div class="tab-pane fade" id="expense" role="tabpanel" aria-labelledby="disabled-tab">
+            <div class="d-flex justify-content-center">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">
+                        <i class="bi bi-arrow-down-circle text-expense"></i> Despesas
+                        </h5>
+                        <button class="btn btn-sm btn-outline-primary" id="add-expense-category">
+                        <i class="bi bi-plus"></i>
+                        </button>
+                    </div>
+                    <div class="card-body p-0">
+                        <!-- Categorias carregadas via funcao -->
+                        <?php exibir_categoria("Despesa"); ?>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="income" role="tabpanel" aria-labelledby="disabled-tab">
+            <div class="d-flex justify-content-center">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">
+                                <i class="bi bi-arrow-up-circle text-income"></i> Receitas
+                            </h5>
+                            <button class="btn btn-sm btn-outline-primary" id="add-income-category">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                        </div>
+                        <div class="card-body p-0">
+                            <?php exibir_categoria("Receita"); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Categorias Desativadas -->
         <div class="tab-pane fade" id="disabled" role="tabpanel" aria-labelledby="disabled-tab">
             <div class="row">
