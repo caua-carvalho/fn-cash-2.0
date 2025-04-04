@@ -2,8 +2,8 @@
 
 // Incluir o cabeçalho
 require_once "../conexao.php";
-require_once "validacao_login.php";
-require_once "funcoes.php";
+require_once "../validacao_login.php";
+require_once "../funcoes.php";
 
 
 // CADASTRO DE CATEGORIA
