@@ -38,6 +38,7 @@ CREATE TABLE CATEGORIA (
 
 CREATE TABLE TRANSACAO (
     ID_Transacao INT AUTO_INCREMENT PRIMARY KEY,
+    Titulo varchar(150) not null,
     Descricao VARCHAR(255) NOT NULL,
     Valor DECIMAL(15,2) NOT NULL,
     Data DATE NOT NULL,
